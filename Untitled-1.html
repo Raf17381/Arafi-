@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Arafi Jhayanto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f2f7; /* Light blue background for body */
+            color: #2d3748; /* Darker text for better contrast */
+        }
+        .portfolio-item {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative; /* Needed for absolute positioning of the button */
+        }
+        .portfolio-item:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem; /* Increased margin */
+        }
+        /* Removed the ::after pseudo-element for the underline effect */
+        /* .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #6366f1;
+            border-radius: 2px;
+        } */
+        /* Style for the overlay button on portfolio items */
+        .portfolio-image-container {
+            position: relative;
+            width: 100%;
+            height: 208px; /* Fixed height for consistency (h-52 in Tailwind) */
+            overflow: hidden;
+            border-top-left-radius: 0.75rem; /* Match parent's rounded corners */
+            border-top-right-radius: 0.75rem; /* Match parent's rounded corners */
+        }
+        .portfolio-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+        }
+        .portfolio-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border-top-left-radius: 0.75rem; /* Match parent's rounded corners */
+            border-top-right-radius: 0.75rem; /* Match parent's rounded corners */
+            pointer-events: none; /* Allows clicks to pass through when hidden */
+        }
+        .portfolio-item:hover .portfolio-image-overlay {
+            opacity: 1;
+            pointer-events: auto; /* Enable clicks when visible */
+        }
+        .portfolio-image-overlay button {
+            background-color: #6366f1; /* Indigo 500 */
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Full rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+        .portfolio-image-overlay button:hover {
+            background-color: #4f46e5; /* Darker indigo */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header Section (Hero) -->
+        <header class="bg-gradient-to-br from-gray-900 to-gray-700 text-white p-8 shadow-2xl rounded-b-3xl">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center py-12">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h1 class="text-5xl md:text-6xl font-extrabold leading-tight animate-fade-in-down">
+                        Arafi Jhayanto
+                    </h1>
+                    <p class="text-2xl md:text-3xl font-light mt-2 animate-fade-in-up">
+                        Desainer Grafis Profesional & Kreatif
+                    </p>
+                </div>
+                <!-- Optional: Add a subtle graphic or icon here -->
+                <div class="hidden md:block">
+                    <!-- Example: A simple SVG icon for design (color changed to white for contrast) -->
+                    <svg class="w-24 h-24 text-white opacity-75" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93h7v7.93zm1-15.93c3.95.49 7 3.85 7 7.93h-7V4.07z"/>
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 px-4 bg-blue-100 rounded-2xl shadow-xl mx-4 mt-10">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-800 section-title mb-10">Tentang Saya</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                    <div class="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl border-4 border-indigo-400 transform hover:scale-105 transition-transform duration-300">
+                        <!-- Profile picture element with a unique ID -->
+                        <img id="profilePicture" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Foto Profil Arafi Jhayanto" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/288x288/cccccc/333333?text=Foto+Profil+Tidak+Tersedia';">
+                        <!-- Button to change profile picture -->
+                        <button onclick="triggerProfileFileInput()" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs px-3 py-1 rounded-full shadow-md transition-colors duration-200">
+                            Ubah Foto Profil
+                        </button>
+                    </div>
+                    <div class="max-w-3xl text-lg leading-relaxed text-gray-700 text-left">
+                        <p class="mb-5">
+                            Halo! Saya Arafi Jhayanto, seorang desainer grafis yang bersemangat dengan pengalaman yang pernah diajarkan di sekolah dalam mengubah ide menjadi visual yang memukau dan efektif. Saya percaya bahwa setiap desain harus memiliki tujuan, cerita, dan dampak yang kuat.
+                        </p>
+                        <p class="mb-5">
+                            Sepanjang karir saya, saya telah berkolaborasi dengan berbagai klien, mulai dari startup inovatif hingga perusahaan mapan, membantu mereka membangun identitas visual yang kuat dan menarik perhatian audiens. Saya selalu antusias untuk mempelajari tren terbaru dan teknologi desain untuk memastikan setiap proyek tidak hanya indah, tetapi juga relevan dan fungsional.
+                        </p>
+                        <p>
+                            Keahlian saya mencakup berbagai bidang desain grafis, termasuk desain logo dan branding, ilustrasi digital yang detail, tata letak untuk publikasi cetak dan digital, desain kemasan produk yang inovatif, serta pembuatan konten visual yang menarik untuk media sosial dan web. Saya berkomitmen untuk memberikan solusi desain yang tidak hanya memenuhi, tetapi melampaui ekspektasi klien.
+                        </p>
+                        <p>
+                            Mari kita berkreasi bersama dan wujudkan ide-ide brilian Anda menjadi kenyataan visual yang luar biasa!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 px-4 bg-blue-50 rounded-2xl shadow-xl mx-4 mt-10 flex-grow">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-gray-800 text-center section-title mb-12">Karya Portofolio</h2>
+
+                <!-- Button to add new portfolio item -->
+                <div class="text-center mb-10">
+                    <button onclick="triggerPortfolioFileInput()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                        + Tambah Karya Portofolio
+                    </button>
+                </div>
+
+                <div id="portfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Portfolio Item 1: Brand Identity Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage1" src="https://placehold.co/600x400/6366f1/ffffff?text=Desain+Identitas+Merek" alt="Desain Identitas Merek">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage1')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Desain Identitas Merek Komprehensif</h3>
+                            <p class="text-gray-600 text-sm">
+                                Pengembangan identitas merek lengkap, termasuk logo, palet warna, tipografi, dan pedoman gaya. Dirancang untuk menciptakan citra merek yang kuat dan kohesif.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 2: Digital Illustration -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage2" src="https://placehold.co/600x400/8b5cf6/ffffff?text=Ilustrasi+Digital" alt="Ilustrasi Digital">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage2')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Ilustrasi Buku Anak "Petualangan Fantasi"</h3>
+                            <p class="text-gray-600 text-sm">
+                                Serangkaian ilustrasi digital penuh warna untuk buku cerita anak-anak, dengan gaya yang ceria dan karakter yang ekspresif, menarik imajinasi pembaca muda.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 3: Event Poster Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage3" src="https://placehold.co/600x400/ec4899/ffffff?text=Desain+Poster+Acara" alt="Desain Poster Acara">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage3')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Desain Poster Acara Musik "Rhythm Nation"</h3>
+                            <p class="text-gray-600 text-sm">
+                                Desain poster promosi untuk festival musik tahunan, menggunakan tipografi dinamis dan elemen visual yang menarik perhatian untuk menarik audiens yang luas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 4: Product Packaging Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage4" src="https://placehold.co/600x400/10b981/ffffff?text=Desain+Kemasan" alt="Desain Kemasan Produk">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage4')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Desain Kemasan Produk Kopi Premium "Aroma"</h3>
+                            <p class="text-gray-600 text-sm">
+                                Desain kemasan inovatif untuk produk kopi premium, menonjolkan kualitas dan keaslian dengan ilustrasi tangan dan palet warna yang hangat.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 5: Infographic Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage5" src="https://placehold.co/600x400/f59e0b/ffffff?text=Infografis" alt="Infografis Data">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage5')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Infografis Laporan Tahunan Perusahaan</h3>
+                            <p class="text-gray-600 text-sm">
+                                Visualisasi data kompleks menjadi infografis yang mudah dipahami untuk laporan tahunan perusahaan. Desain yang bersih dan penggunaan ikonografi membantu menyajikan informasi penting secara efektif.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 6: Youtube Thumbnail Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage6" src="https://placehold.co/600x400/ef4444/ffffff?text=Desain+Thumbnail+YouTube" alt="Desain Thumbnail YouTube K-Pop">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage6')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Desain Thumbnail YouTube "Kpop Idol's Surgery Stories"</h3>
+                            <p class="text-gray-600 text-sm">
+                                Pembuatan thumbnail YouTube yang menarik perhatian dengan tipografi yang kuat dan komposisi visual yang dinamis, dirancang khusus untuk meningkatkan klik dan engagement pada konten video.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 7: Social Media Content Design -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage7" src="https://placehold.co/600x400/3b82f6/ffffff?text=Template+Sosial+Media" alt="Desain Sosial Media">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage7')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Template Konten Media Sosial Kampanye</h3>
+                            <p class="text-gray-600 text-sm">
+                                Pembuatan set template desain yang konsisten untuk kampanye media sosial, memastikan merek memiliki tampilan yang profesional dan mudah dikenali di berbagai platform.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Item 8: Experimental Typography -->
+                    <div class="portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                        <div class="portfolio-image-container">
+                            <img id="portfolioImage8" src="https://placehold.co/600x400/a855f7/ffffff?text=Tipografi+Eksperimental" alt="Tipografi Eksperimental">
+                            <div class="portfolio-image-overlay">
+                                <button onclick="changePortfolioImage('portfolioImage8')">Ubah Gambar</button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Proyek Tipografi Eksperimental "Fluidity"</h3>
+                            <p class="text-gray-600 text-sm">
+                                Eksplorasi bentuk dan gaya tipografi untuk menciptakan karya seni visual yang unik dan ekspresif. Proyek ini menunjukkan kreativitas dalam penggunaan huruf sebagai elemen desain utama.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-4 bg-gradient-to-br from-gray-900 to-gray-700 text-white mt-10 rounded-t-3xl shadow-2xl">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-8">Hubungi Saya</h2>
+                <p class="text-xl mb-8 leading-relaxed">
+                    Tertarik untuk berkolaborasi dalam proyek baru atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya! Saya siap membantu mewujudkan ide-ide kreatif Anda.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 text-xl">
+                    <p>
+                        <a href="mailto:arafijh@gmail.com" class="underline hover:text-indigo-200 transition-colors duration-200 flex items-center justify-center text-white">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            arafijh@gmail.com
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://wa.me/6288225182945" target="_blank" class="underline hover:text-indigo-200 transition-colors duration-200 flex items-center justify-center text-white">
+                            <!-- WhatsApp SVG Icon -->
+                            <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.04 2C7.34 2 3.55 5.79 3.55 10.49C3.55 12.08 4.02 13.59 4.86 14.89L3.41 19.58L8.27 18.23C9.54 18.95 10.99 19.33 12.5 19.33H12.04C16.74 19.33 20.53 15.54 20.53 10.84C20.53 6.14 16.74 2.35 12.04 2.35L12.04 2ZM16.59 14.23C16.34 14.67 15.11 15.23 14.87 15.35C14.62 15.47 14.47 15.53 14.22 15.18C13.97 14.83 13.25 14.6 12.9 14.45C12.55 14.3 12.29 14.23 12.04 14.58C11.79 14.93 11.23 15.47 11.08 15.62C10.93 15.77 10.78 15.77 10.53 15.65C10.28 15.53 9.49 15.26 8.57 14.45C7.84 13.84 7.33 13.12 7.18 12.87C7.03 12.62 7.03 12.47 7.15 12.22C7.27 11.97 7.49 11.69 7.64 11.43C7.79 11.18 7.86 11.03 8.01 10.78C8.16 10.53 8.23 10.38 8.35 10.13C8.47 9.88 8.41 9.73 8.32 9.58C8.23 9.43 7.55 7.89 7.28 7.29C7.01 6.69 6.74 6.74 6.59 6.74C6.44 6.74 6.27 6.74 6.13 6.74C5.98 6.74 5.73 6.81 5.48 7.06C5.23 7.31 4.51 7.93 4.51 9.39C4.51 10.85 5.51 12.26 5.66 12.41C5.81 12.56 7.68 15.4 10.59 16.63C13.49 17.86 13.78 17.76 14.34 17.7C14.91 17.64 16.03 17.02 16.28 16.3C16.53 15.58 16.53 14.96 16.59 14.23Z"/>
+                            </svg>
+                            088225182945
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.instagram.com/arafi_151006" target="_blank" class="underline hover:text-indigo-200 transition-colors duration-200 flex items-center justify-center text-white">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2.2C5.5 4.2 4.2 5.5 4.2 7.6v8.8c0 2.1 1.3 3.4 3.4 3.4h8.8c2.1 0 3.4-1.3 3.4-3.4V7.6c0-2.1-1.3-3.4-3.4-3.4H7.6z"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/><circle cx="16.5" cy="7.5" r="1.5"/></svg>
+                            Instagram arafi_151006
+                        </a>
+                    </p>
+                     <p>
+                        <a href="https://lynk.id/arafi_151006" target="_blank" class="underline hover:text-indigo-200 transition-colors duration-200 flex items-center justify-center text-white">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-7h2v7zm3-7h-2v7h2v-7zm3 0h-2v7h2v-7z"/>
+                            </svg>
+                            Lynk.id arafi_151006
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gradient-to-br from-gray-900 to-gray-700 text-gray-300 py-6 text-center rounded-t-2xl">
+            <div class="container mx-auto">
+                <p>&copy; 2025 Arafi Jhayanto. Hak Cipta Dilindungi.</p>
+                <p class="text-sm mt-2">Didesain dengan ❤️ dan Tailwind CSS.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle profile picture file input
+        function triggerProfileFileInput() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*'; // Accept only image files
+
+            fileInput.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const profilePicElement = document.getElementById('profilePicture');
+                        if (profilePicElement) {
+                            profilePicElement.src = e.target.result;
+                            console.log("Foto profil berhasil diubah dari file.");
+                        }
+                    };
+                    reader.onerror = function() {
+                        console.error("Gagal membaca file untuk foto profil.");
+                        alert("Gagal membaca file. Pastikan file gambar valid.");
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    console.log("Tidak ada file yang dipilih untuk foto profil.");
+                }
+            };
+            fileInput.click();
+        }
+
+        // Function to handle portfolio item file input and add to grid
+        function triggerPortfolioFileInput() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*'; // Accept only image files
+
+            fileInput.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const portfolioGrid = document.getElementById('portfolioGrid');
+                        if (portfolioGrid) {
+                            // Create new portfolio item elements
+                            const newItem = document.createElement('div');
+                            newItem.className = 'portfolio-item bg-blue-100 rounded-xl shadow-lg overflow-hidden border border-gray-200'; // Changed to bg-blue-100
+
+                            const imageContainer = document.createElement('div');
+                            imageContainer.className = 'portfolio-image-container';
+
+                            const img = document.createElement('img');
+                            // Generate a unique ID for the new image
+                            const newImageId = 'portfolioImage' + Date.now();
+                            img.id = newImageId;
+                            img.src = e.target.result;
+                            img.alt = 'Karya Baru Anda'; // Default alt text
+                            img.className = 'w-full h-full object-cover rounded-t-xl';
+                            img.onerror = function() {
+                                this.onerror=null;
+                                this.src='https://placehold.co/600x400/cccccc/333333?text=Gambar+Gagal+Dimuat';
+                                console.error("Gagal memuat gambar karya baru.");
+                            };
+
+                            const overlay = document.createElement('div');
+                            overlay.className = 'portfolio-image-overlay';
+                            const changeButton = document.createElement('button');
+                            changeButton.textContent = 'Ubah Gambar';
+                            changeButton.onclick = function() {
+                                changePortfolioImage(newImageId);
+                            };
+                            overlay.appendChild(changeButton);
+
+                            imageContainer.appendChild(img);
+                            imageContainer.appendChild(overlay);
+
+
+                            const textDiv = document.createElement('div');
+                            textDiv.className = 'p-6';
+
+                            const title = document.createElement('h3');
+                            title.className = 'text-xl font-semibold text-gray-800 mb-2';
+                            title.textContent = 'Karya Portofolio Baru'; // Default title
+
+                            const description = document.createElement('p');
+                            description.className = 'text-gray-600 text-sm';
+                            description.textContent = 'Ini adalah deskripsi untuk karya portofolio baru Anda. Anda dapat mengeditnya nanti.'; // Default description
+
+                            // Append elements
+                            textDiv.appendChild(title);
+                            textDiv.appendChild(description);
+                            newItem.appendChild(imageContainer);
+                            newItem.appendChild(textDiv);
+
+                            portfolioGrid.appendChild(newItem);
+                            console.log("Karya portofolio baru berhasil ditambahkan.");
+                        }
+                    };
+                    reader.onerror = function() {
+                        console.error("Gagal membaca file untuk karya portofolio.");
+                        alert("Gagal membaca file. Pastikan file gambar valid.");
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    console.log("Tidak ada file yang dipilih untuk karya portofolio.");
+                }
+            };
+            fileInput.click();
+        }
+
+        // Function to change a specific portfolio item image
+        function changePortfolioImage(imageId) {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+
+            fileInput.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const targetImage = document.getElementById(imageId);
+                        if (targetImage) {
+                            targetImage.src = e.target.result;
+                            console.log(`Gambar untuk ${imageId} berhasil diubah.`);
+                        }
+                    };
+                    reader.onerror = function() {
+                        console.error(`Gagal membaca file untuk ${imageId}.`);
+                        alert("Gagal membaca file. Pastikan file gambar valid.");
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    console.log(`Tidak ada file yang dipilih untuk ${imageId}.`);
+                }
+            };
+            fileInput.click();
+        }
+    </script>
+</body>
+</html>
